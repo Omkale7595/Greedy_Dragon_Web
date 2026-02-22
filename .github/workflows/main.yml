@@ -1,1 +1,21 @@
+name: Build Pygame Web
+on: [push] # This triggers the build every time you upload code
 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install Pygbag & Build
+        run: |
+          pip install pygbag
+          pygbag --build .
+      - name: Upload to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build/web # This is the folder pygbag creates
+          
